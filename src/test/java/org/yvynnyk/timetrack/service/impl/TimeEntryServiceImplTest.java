@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.yvynnyk.timetrack.dto.TaskDTO;
-import org.yvynnyk.timetrack.mapper.TaskMapper;
 import org.yvynnyk.timetrack.model.Task;
 import org.yvynnyk.timetrack.model.TimeEntry;
 import org.yvynnyk.timetrack.model.enumeration.TaskStatus;
@@ -32,9 +31,6 @@ class TimeEntryServiceImplTest {
 
 	@Mock
 	private TaskService taskService;
-
-	@Mock
-	private TaskMapper taskMapper;
 
 	@InjectMocks
 	private TimeEntryServiceImpl timeEntryService;
@@ -84,9 +80,7 @@ class TimeEntryServiceImplTest {
 		taskDTO.setStatus(TaskStatus.IN_PROGRESS);
 		when(taskService.getById(1L)).thenReturn(taskDTO);
 
-		IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-			timeEntryService.start(1L);
-		});
+		IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> timeEntryService.start(1L));
 
 		assertEquals(TASK_STATUS_ERROR, thrown.getMessage());
 		verify(taskService, times(1)).getById(1L);
@@ -98,9 +92,7 @@ class TimeEntryServiceImplTest {
 		taskDTO.setStatus(TaskStatus.COMPLETED);
 		when(taskService.getById(1L)).thenReturn(taskDTO);
 
-		IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-			timeEntryService.start(1L);
-		});
+		IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> timeEntryService.start(1L));
 
 		assertEquals(TASK_STATUS_ERROR, thrown.getMessage());
 
@@ -130,9 +122,7 @@ class TimeEntryServiceImplTest {
 		taskDTO.setStatus(TaskStatus.CREATE);
 		when(taskService.getById(1L)).thenReturn(taskDTO);
 
-		IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-			timeEntryService.stop(1L);
-		});
+		IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> timeEntryService.stop(1L));
 
 		assertEquals(TASK_STATUS_ERROR, thrown.getMessage());
 		verify(taskService, times(1)).getById(1L);
@@ -144,9 +134,7 @@ class TimeEntryServiceImplTest {
 	void stop_taskNotFound() {
 		when(taskService.getById(1L)).thenReturn(taskDTO);
 
-		IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-			timeEntryService.stop(1L);
-		});
+		IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> timeEntryService.stop(1L));
 
 		assertEquals(TASK_STATUS_ERROR, thrown.getMessage());
 		verify(taskService, times(1)).getById(1L);

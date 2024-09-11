@@ -97,9 +97,7 @@ class TaskServiceImplTest {
 	void update_nonExistingTask_shouldThrowException() {
 		when(taskRepository.existsById(1L)).thenReturn(false);
 
-		assertThrows(ResourceNotFoundException.class, () -> {
-			taskService.update(1L, taskDTO);
-		});
+		assertThrows(ResourceNotFoundException.class, () -> taskService.update(1L, taskDTO));
 
 		verify(taskRepository).existsById(1L);
 	}
@@ -121,9 +119,7 @@ class TaskServiceImplTest {
 	void getById_nonExistingTask_shouldThrowException() {
 		when(taskRepository.findById(1L)).thenReturn(Optional.empty());
 
-		assertThrows(RuntimeException.class, () -> {
-			taskService.getById(1L);
-		});
+		assertThrows(RuntimeException.class, () -> taskService.getById(1L));
 
 		verify(taskRepository).findById(1L);
 	}

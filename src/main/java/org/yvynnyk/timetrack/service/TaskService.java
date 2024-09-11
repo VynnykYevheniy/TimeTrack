@@ -21,7 +21,7 @@ public interface TaskService {
 	 * @param task the task to be created
 	 * @return the created task
 	 */
-	TaskDTO create(TaskCreateDTO taskCreateDTO);
+	TaskDTO create(TaskCreateDTO task);
 
 	/**
 	 * Updates an existing task by its ID.
